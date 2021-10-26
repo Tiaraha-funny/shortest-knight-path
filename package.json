@@ -1,0 +1,9 @@
+{
+  "name": "shortest_knight_path",
+  "version": "1.0.0",
+  "description": "Solving task challenge from codewars",
+  "main": "index.js",
+  "repository": "https://github.com/Tiaraha-funny/shortest-knight-path.git",
+  "author": "Tiaraha-funny <peta.jea@onja.org>",
+  "license": "MIT"
+}

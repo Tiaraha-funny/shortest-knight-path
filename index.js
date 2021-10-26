@@ -30,6 +30,20 @@ let possibleMoves = [
     [2,-1]
 ]
 
+let count = 0;
+
+const getCoordonatesFromField = (fieldCode, chessBoard) => {
+    for (let row = 0; row < chessBoard.length; row++) {
+        const rows = chessBoard[row];
+        for (let column = 0; column < rows.length; column++) {
+            if(chessBoard[row][column] === fieldCode) {
+                return [row, column]
+            }
+        }
+    }
+    
+}
+
 const getAllLandingPositions = (position, possibleMoves) => {
     const arrOfMoves = possibleMoves.map(move => {
         let [moveX,moveY] = move;
@@ -47,27 +61,45 @@ const findValidMoves = (landingPositions) => {
         return validPosX && validPosY
     })
 }
+    
+const checkIfContainsPositions = (endingPositions, validPositions) => {
+    const [moveX, moveY] = endingPositions;
+    const findPositions = validPositions.some((pos) => {
+      const [posX, posY] = pos;
+      return moveX === posX && moveY === posY;
+    });
+    return findPositions;
+  };
 
-const getCoordonatesFromField = (fieldCode, chessBoard) => {
-    for (let row = 0; row < chessBoard.length; row++) {
-        const rows = chessBoard[row];
-        for (let column = 0; column < rows.length; column++) {
-            if(chessBoard[row][column] === fieldCode) {
-                return [row, column]
-            }
+const startPosition = getCoordonatesFromField('a1', chessBoard)
+const endingPositions = getCoordonatesFromField("f1", chessBoard);
+const landingPositions = getAllLandingPositions(startPosition, possibleMoves)
+const validPositions = findValidMoves(landingPositions)
+const checkIfContains = checkIfContainsPositions(endingPositions, validPositions);
+
+const doNextMoves = (startposArr, finalDestination) => {
+    for (let next = 0; next < startposArr.length; next++) {
+        const element = startposArr[next];
+        // find landing positions
+        landingPositions
+        // getAllLandingPositions(element, startposArr)
+        
+        // find valid positions
+        validPositions
+        // findValidMoves(finalDestination)
+        // checkIf it conains
+        // checkIfContains
+        checkIfContainsPositions(finalDestination, validPositions)
+
+        if(checkIfContains) {
+           count++;
+        } else {
+           doNextMoves(validPositions, finalDestination)
         }
     }
-    
+    return count
 }
 
-const findCoordinates = (endFieldCode, chessBoard) => {
-    const validMoves = findValidMoves(endFieldCode)
-    console.log(validMoves, 'start');
-}
+const coordinates = doNextMoves(validPositions, endingPositions)
+console.log(coordinates)
 
-const positions = getCoordonatesFromField('d5', chessBoard)
-
-console.log('possible moves', findValidMoves(positions));
-
-// find coodinates of finish
-//  check if the finish coordinates is in validMoves array
